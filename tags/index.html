@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>标签列表 | Battle-on</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link rel="shortcut icon" href="https://junfa.vercel.app//favicon.ico?v=1597065720979">
+<link rel="stylesheet" href="https://junfa.vercel.app//styles/main.css">
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="&lt;span&gt;坚持原创，坚持独立思考&lt;span&gt;">
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://junfa.vercel.app/">
+        <img src="https://junfa.vercel.app//images/avatar.png?v=1597065720979" class="site-logo">
+        <h1 class="site-title">Battle-on</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://junfa.vercel.app/study" class="site-nav" target="_blank">
+            技术文章
+          </a>
+        
+      
+        
+          <a href="https://junfa.vercel.app/moreabout" class="site-nav" target="_blank">
+            所思所想
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Battle-on" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <span>坚持原创，坚持独立思考<span>
+    </div>
+    <div class="site-footer">
+      <span><a href="https://github.com/Battle-on">我的主页</a></span> | <a class="rss" href="https://junfa.vercel.app//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="tag-list-title">标签列表</h2>
+          <div class="tags-container">
+            
+              <a class="tag" href="https://junfa.vercel.app/moreabout/">moreabout</a>
+            
+              <a class="tag" href="https://junfa.vercel.app/study/">study</a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

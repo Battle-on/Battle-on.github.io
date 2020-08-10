@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>vue3的学习！ | Battle-on</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link rel="shortcut icon" href="https://junfa.vercel.app//favicon.ico?v=1597065720979">
+<link rel="stylesheet" href="https://junfa.vercel.app//styles/main.css">
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+
+
+vue3的使用，学习
+
+
+vue 2 和 vue 3的不同点：
+
+composition Api
+虚拟dom的重写
+ts的更好支持
+vue的tree-shaeing
+reactive
+file size
+new Component
+
+..." />
+    <meta name="keywords" content="study" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://junfa.vercel.app/">
+        <img src="https://junfa.vercel.app//images/avatar.png?v=1597065720979" class="site-logo">
+        <h1 class="site-title">Battle-on</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://junfa.vercel.app/study" class="site-nav" target="_blank">
+            技术文章
+          </a>
+        
+      
+        
+          <a href="https://junfa.vercel.app/moreabout" class="site-nav" target="_blank">
+            所思所想
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Battle-on" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <span>坚持原创，坚持独立思考<span>
+    </div>
+    <div class="site-footer">
+      <span><a href="https://github.com/Battle-on">我的主页</a></span> | <a class="rss" href="https://junfa.vercel.app//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">vue3的学习！</h2>
+            <div class="post-date">2019-01-25</div>
+            
+              <div class="feature-container" style="background-image: url('https://dss1.bdstatic.com/6OF1bjeh1BF3odCf/it/u=3339202615,3879308162&amp;fm=85&amp;app=92&amp;f=PNG?w=121&amp;h=75&amp;s=67B06C6CF98ECD74462BAF0F020060DD')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <!-- more -->
+<!-- more -->
+<blockquote>
+<p>vue3的使用，学习</p>
+</blockquote>
+<!-- more -->
+<h1 id="vue-2-和-vue-3的不同点">vue 2 和 vue 3的不同点：</h1>
+<ul>
+<li>composition Api</li>
+<li>虚拟dom的重写</li>
+<li>ts的更好支持</li>
+<li>vue的tree-shaeing</li>
+<li>reactive</li>
+<li>file size</li>
+<li>new Component</li>
+</ul>
+<p>初次体验vue3：</p>
+<blockquote>
+<p>vue-cli3 +</p>
+</blockquote>
+<pre><code>vue create vue3
+cd vue3
+vue add vue-next
+npm install 
+npm run serve
+</code></pre>
+<blockquote>
+<p>vite</p>
+</blockquote>
+<pre><code>npm install -g create-vite-app
+create-vite-app 01-vue3-vite
+cd 01-vue3-vite
+npm install
+npm run dev
+</code></pre>
+<p>还是推荐使用vite的方式 vue-cli3 在vue正式版本前，还需要使用 <code>@vue/composition-api</code> 来结合起来使用。</p>
+<p>vue3代码的体验</p>
+<pre><code>
+&lt;template&gt;
+  &lt;h1&gt;{{state.count}} * 2={{double}}&lt;/h1&gt;
+  &lt;h2&gt;{{num}}&lt;/h2&gt;
+  &lt;button @click=&quot;add&quot;&gt;累加&lt;/button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import {reactive,computed,ref,onMounted} from 'vue'
+export default {
+  setup(){
+    const state = reactive({
+      count:1
+    })
+    const num = ref(2)
+
+    function add(){
+      state.count++
+      num.value+=10
+    }
+    const double = computed(()=&gt;state.count*2)
+
+    onMounted(()=&gt;{
+      console.log('mouted')
+    })
+    return {state,add,double,num}
+  }
+}
+&lt;/script&gt;
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://junfa.vercel.app/study/" class="tag">
+                    study
+                  </a>
+                
+              </div>
+            
+            
+
+            
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: '',
+      apikey: '',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
+
+
+
+
+  </body>
+</html>

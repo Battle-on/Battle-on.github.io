@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://junfa.vercel.app/</id>
+    <title>Battle-on</title>
+    <updated>2020-08-10T13:22:03.085Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://junfa.vercel.app/"/>
+    <link rel="self" href="https://junfa.vercel.app/atom.xml"/>
+    <subtitle>&lt;span&gt;坚持原创，坚持独立思考&lt;span&gt;</subtitle>
+    <logo>https://junfa.vercel.app/images/avatar.png</logo>
+    <icon>https://junfa.vercel.app/favicon.ico</icon>
+    <rights>All rights reserved 2020, Battle-on</rights>
+    <entry>
+        <title type="html"><![CDATA[基金介绍：]]></title>
+        <id>https://junfa.vercel.app/基金/</id>
+        <link href="https://junfa.vercel.app/基金/">
+        </link>
+        <updated>2020-08-05T14:16:45.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<p><strong>基金的介绍😊</strong></p>
+<p>按照投资对象可以分为：货币型，股票型，混合型，债券型基金。<br>
+组织形态可分为： 公司型基金，契约型基金<br>
+根据封闭形态可以分为：开放式基金和封闭式基金。</p>
+<p>咱一个个来说：<br>
+🍎<code>:货币型基金</code></p>
+<p>🍏<code>:股票型基金</code></p>
+<p>🍐<code>:混合型</code></p>
+<p>🍊:<code>债券型基金</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[重新认识递归]]></title>
+        <id>https://junfa.vercel.app/suanfa/</id>
+        <link href="https://junfa.vercel.app/suanfa/">
+        </link>
+        <updated>2020-08-05T14:12:05.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>重新学习了一波递归算法，有很多收获：</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>重新学习了一波递归算法，有很多收获：</p>
+</blockquote>
+<!-- more -->
+<!-- more -->
+<p>下面我们来说说几个letcode的经典递归算法吧</p>
+<h3 id="反转字符串-使用递归的方案">反转字符串-使用递归的方案</h3>
+<pre><code>var reverseString = function(s,index = 0) {
+    if(index &gt;= Math.floor(s.length / 2)){
+    }else {
+        const temp = s[index];
+        s[index] = s[s.length -  index - 1]
+        s[s.length -  index - 1] = temp;
+        reverseString(s,index + 1)
+    }
+};
+</code></pre>
+<h4 id="杨辉三角">杨辉三角</h4>
+<pre><code>var generate = function(numRows) {
+    if(numRows===1){
+        return [[1]]
+    }
+    const arr = []
+
+    for(let i=0;i&lt;numRows;i++){
+        arr[i] = []
+            for(let j=0;j&lt;=i;j++){
+                arr[i][j] = []
+                if(j==0 || j==i) {
+                    arr[i][j]=1;    //边界赋值为1   
+                }else{
+                    arr[i][j]=arr[i-1][j-1]+arr[i-1][j];
+                }
+            }
+    }
+    return arr
+};
+</code></pre>
+<h3 id="递归的高阶应用-memorization">递归的高阶应用-memorization</h3>
+<h5 id="经典案例爬楼梯">经典案例：爬楼梯</h5>
+<h6 id="假设你正在爬楼梯-需要-n-阶你才能到达楼顶-每次你可以爬-1-或-2个台阶-你有多少种不同的方法可以爬到楼顶呢注意给定-n-是一个正整数">假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数</h6>
+<p>我们，分析一下，我们找下规律，因为题目限定了 值可以爬 1 或者2个台阶，也就是说，到底最高层台阶的前一步只有两种选择，要不就是 在 第 <code>n - 1</code><br>
+要不就是 在 第 <code>n - 2</code>层</p>
+<pre><code>一层楼梯： 1
+两层楼梯： 1 + 1， 2
+三层楼梯： 1 + 2，1+1+1 ， 2+1
+四层楼梯： 1+1+2 2+2 1+2+1 1+1+1+1 2+1+1
+</code></pre>
+<p>根据需求，代码如下：</p>
+<pre><code>const map = new Map()
+const climbStairs = function(n) {
+  let reslut = ''
+  if(map.get(n)){
+    return map.get(n)
+  }
+  if(n &lt;= 3) {
+      reslut =  n
+  }else {
+    reslut =  climbStairs(n - 1) +  climbStairs(n-2)
+  }
+  map.set(n, reslut)
+  return reslut
+};
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vue3的学习！]]></title>
+        <id>https://junfa.vercel.app/vue/</id>
+        <link href="https://junfa.vercel.app/vue/">
+        </link>
+        <updated>2019-01-25T11:09:48.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<!-- more -->
+<blockquote>
+<p>vue3的使用，学习</p>
+</blockquote>
+<!-- more -->
+<h1 id="vue-2-和-vue-3的不同点">vue 2 和 vue 3的不同点：</h1>
+<ul>
+<li>composition Api</li>
+<li>虚拟dom的重写</li>
+<li>ts的更好支持</li>
+<li>vue的tree-shaeing</li>
+<li>reactive</li>
+<li>file size</li>
+<li>new Component</li>
+</ul>
+<p>初次体验vue3：</p>
+<blockquote>
+<p>vue-cli3 +</p>
+</blockquote>
+<pre><code>vue create vue3
+cd vue3
+vue add vue-next
+npm install 
+npm run serve
+</code></pre>
+<blockquote>
+<p>vite</p>
+</blockquote>
+<pre><code>npm install -g create-vite-app
+create-vite-app 01-vue3-vite
+cd 01-vue3-vite
+npm install
+npm run dev
+</code></pre>
+<p>还是推荐使用vite的方式 vue-cli3 在vue正式版本前，还需要使用 <code>@vue/composition-api</code> 来结合起来使用。</p>
+<p>vue3代码的体验</p>
+<pre><code>
+&lt;template&gt;
+  &lt;h1&gt;{{state.count}} * 2={{double}}&lt;/h1&gt;
+  &lt;h2&gt;{{num}}&lt;/h2&gt;
+  &lt;button @click=&quot;add&quot;&gt;累加&lt;/button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import {reactive,computed,ref,onMounted} from 'vue'
+export default {
+  setup(){
+    const state = reactive({
+      count:1
+    })
+    const num = ref(2)
+
+    function add(){
+      state.count++
+      num.value+=10
+    }
+    const double = computed(()=&gt;state.count*2)
+
+    onMounted(()=&gt;{
+      console.log('mouted')
+    })
+    return {state,add,double,num}
+  }
+}
+&lt;/script&gt;
+</code></pre>
+]]></content>
+    </entry>
+</feed>

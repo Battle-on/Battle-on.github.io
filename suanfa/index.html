@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>重新认识递归 | Battle-on</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link rel="shortcut icon" href="https://junfa.vercel.app//favicon.ico?v=1597065720979">
+<link rel="stylesheet" href="https://junfa.vercel.app//styles/main.css">
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+重新学习了一波递归算法，有很多收获：
+
+
+
+下面我们来说说几个letcode的经典递归算法吧
+反转字符串-使用递归的方案
+var reverseString = function(s,index = 0) {
+    if(index &..." />
+    <meta name="keywords" content="study" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://junfa.vercel.app/">
+        <img src="https://junfa.vercel.app//images/avatar.png?v=1597065720979" class="site-logo">
+        <h1 class="site-title">Battle-on</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://junfa.vercel.app/study" class="site-nav" target="_blank">
+            技术文章
+          </a>
+        
+      
+        
+          <a href="https://junfa.vercel.app/moreabout" class="site-nav" target="_blank">
+            所思所想
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Battle-on" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <span>坚持原创，坚持独立思考<span>
+    </div>
+    <div class="site-footer">
+      <span><a href="https://github.com/Battle-on">我的主页</a></span> | <a class="rss" href="https://junfa.vercel.app//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">重新认识递归</h2>
+            <div class="post-date">2020-08-05</div>
+            
+            <div class="post-content" v-pre>
+              <blockquote>
+<p>重新学习了一波递归算法，有很多收获：</p>
+</blockquote>
+<!-- more -->
+<!-- more -->
+<p>下面我们来说说几个letcode的经典递归算法吧</p>
+<h3 id="反转字符串-使用递归的方案">反转字符串-使用递归的方案</h3>
+<pre><code>var reverseString = function(s,index = 0) {
+    if(index &gt;= Math.floor(s.length / 2)){
+    }else {
+        const temp = s[index];
+        s[index] = s[s.length -  index - 1]
+        s[s.length -  index - 1] = temp;
+        reverseString(s,index + 1)
+    }
+};
+</code></pre>
+<h4 id="杨辉三角">杨辉三角</h4>
+<pre><code>var generate = function(numRows) {
+    if(numRows===1){
+        return [[1]]
+    }
+    const arr = []
+
+    for(let i=0;i&lt;numRows;i++){
+        arr[i] = []
+            for(let j=0;j&lt;=i;j++){
+                arr[i][j] = []
+                if(j==0 || j==i) {
+                    arr[i][j]=1;    //边界赋值为1   
+                }else{
+                    arr[i][j]=arr[i-1][j-1]+arr[i-1][j];
+                }
+            }
+    }
+    return arr
+};
+</code></pre>
+<h3 id="递归的高阶应用-memorization">递归的高阶应用-memorization</h3>
+<h5 id="经典案例爬楼梯">经典案例：爬楼梯</h5>
+<h6 id="假设你正在爬楼梯-需要-n-阶你才能到达楼顶-每次你可以爬-1-或-2个台阶-你有多少种不同的方法可以爬到楼顶呢注意给定-n-是一个正整数">假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数</h6>
+<p>我们，分析一下，我们找下规律，因为题目限定了 值可以爬 1 或者2个台阶，也就是说，到底最高层台阶的前一步只有两种选择，要不就是 在 第 <code>n - 1</code><br>
+要不就是 在 第 <code>n - 2</code>层</p>
+<pre><code>一层楼梯： 1
+两层楼梯： 1 + 1， 2
+三层楼梯： 1 + 2，1+1+1 ， 2+1
+四层楼梯： 1+1+2 2+2 1+2+1 1+1+1+1 2+1+1
+</code></pre>
+<p>根据需求，代码如下：</p>
+<pre><code>const map = new Map()
+const climbStairs = function(n) {
+  let reslut = ''
+  if(map.get(n)){
+    return map.get(n)
+  }
+  if(n &lt;= 3) {
+      reslut =  n
+  }else {
+    reslut =  climbStairs(n - 1) +  climbStairs(n-2)
+  }
+  map.set(n, reslut)
+  return reslut
+};
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://junfa.vercel.app/study/" class="tag">
+                    study
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://junfa.vercel.app/vue/">
+                  <h3 class="post-title">
+                    vue3的学习！
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: '',
+      apikey: '',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
+
+
+
+
+  </body>
+</html>

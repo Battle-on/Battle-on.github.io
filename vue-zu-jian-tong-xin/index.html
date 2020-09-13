@@ -1,130 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://junfa.vercel.app/</id>
-    <title>Battle-on</title>
-    <updated>2020-09-13T12:24:04.733Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://junfa.vercel.app/"/>
-    <link rel="self" href="https://junfa.vercel.app/atom.xml"/>
-    <subtitle>&lt;span&gt;坚持原创，坚持独立思考&lt;span&gt;</subtitle>
-    <logo>https://junfa.vercel.app/images/avatar.png</logo>
-    <icon>https://junfa.vercel.app/favicon.ico</icon>
-    <rights>All rights reserved 2020, Battle-on</rights>
-    <entry>
-        <title type="html"><![CDATA[网络安全普及]]></title>
-        <id>https://junfa.vercel.app/wang-luo-an-quan-pu-ji/</id>
-        <link href="https://junfa.vercel.app/wang-luo-an-quan-pu-ji/">
-        </link>
-        <updated>2020-09-13T12:22:22.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="cross-site-scripting-跨站脚本攻击">Cross Site Scripting 跨站脚本攻击</h2>
-<blockquote>
-<p>XSS (Cross-Site Scripting)，跨站脚本攻击，因为缩写和 CSS重叠，所以只能叫 XSS。跨站脚本攻击是指通过存在安全漏洞的Web⽹站注册⽤户的浏览器内运⾏⾮法的⾮本站点HTML标签或<br>
-JavaScript进⾏的⼀种攻击。</p>
-</blockquote>
-<p>跨站脚本攻击有可能造成以下影响:</p>
-<blockquote>
-<p>利⽤虚假输⼊表单骗取⽤户个⼈信息。<br>
-利⽤脚本窃取⽤户的Cookie值，被害者在不知情的情况下，帮助攻击者发送恶意请求。<br>
-显示伪造的⽂章或图⽚。</p>
-</blockquote>
-<p>攻击手段：通过注入脚本，获取用户信息，造成损失的等</p>
-<p>攻击类型：</p>
-<ul>
-<li>反射型  - url参数直接注⼊</li>
-</ul>
-<pre><code>http://localhost:3000/?from=china
-// alert尝试
-http://localhost:3000/?from=&lt;script&gt;alert(3)&lt;/script&gt;
-</code></pre>
-<ul>
-<li>存储型 - 存储到DB后读取时注⼊</li>
-</ul>
-<pre><code>&lt;script&gt;alert(1)&lt;/script&gt;
-// 跨站脚本注⼊
-我来了&lt;script src=&quot;http://localhost:4000/hack.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<p>防御手段：<br>
-1.csp<br>
-2.转义<br>
-3.对本地存储等不可读取，如 cookie设置 http-only<br>
-4.HEAD</p>
-<h2 id="csrf">CSRF</h2>
-<blockquote>
-<p>CSRF(Cross Site Request Forgery)，即跨站请求伪造，是⼀种常⻅的Web攻击，它利⽤⽤户已登<br>
-录的身份，在⽤户毫不知情的情况下，以⽤户的名义完成⾮法操作。</p>
-</blockquote>
-<p>利⽤⽤户登录态</p>
-<p>⽤户不知情</p>
-<p>防御：</p>
-<p>禁⽌第三⽅⽹站带Cookie - 有兼容性问题</p>
-<p>Referer Check - Https不发送referer</p>
-<p>验证码</p>
-<h2 id="点击劫持">点击劫持</h2>
-<blockquote>
-<p>点击劫持是⼀种视觉欺骗的攻击⼿段。攻击者将需要攻击的⽹站通过 iframe 嵌套的⽅式嵌⼊⾃⼰<br>
-的⽹⻚中，并将 iframe 设置为透明，在⻚⾯中透出⼀个按钮诱导⽤户点击。</p>
-</blockquote>
-<p>防御<br>
-X-FRAME-OPTIONS</p>
-<p>X-FRAME-OPTIONS 是⼀个 HTTP 响应头，在现代浏览器有⼀个很好的⽀持。这个 HTTP 响应头 就<br>
-是为了防御⽤ iframe 嵌套的点击劫持攻击。<br>
-该响应头有三个值可选，分别是</p>
-<pre><code>DENY，表示⻚⾯不允许通过 iframe 的⽅式展示
-SAMEORIGIN，表示⻚⾯可以在相同域名下通过 iframe 的⽅式展示
-ALLOW-FROM，表示⻚⾯可以在指定来源的 iframe 中展示
-</code></pre>
-<p>JS⽅式</p>
-<pre><code>if (self == top) {
- var style = document.getElementById('click-jack')
- document.body.removeChild(style)
- } else {
- top.location = self.location
- }
-</code></pre>
-<h2 id="sql-注入">SQL 注入</h2>
-<pre><code>// 填⼊特殊密码
-1'or'1'='1
-// 拼接后的SQL
-SELECT *
-FROM test.user
-WHERE username = 'laowang'
-AND password = '1'or'1'='1
-</code></pre>
-<p>防御</p>
-<p>所有的查询语句建议使⽤数据库提供的参数化查询接⼝**，参数化的语句使⽤参数⽽不是将⽤户<br>
-输⼊变量嵌⼊到 SQL 语句中，即不要直接拼接 SQL 语句。例如 Node.js 中的 mysqljs 库的 query<br>
-⽅法中的 ? 占位参数。</p>
-<pre><code>// 正确的写法
-const sql = `
-SELECT *
-FROM test.user
-WHERE username = ?
-AND password = ?
-`
-console.log('sql', sql, )
-res = await query(sql,[ctx.request.body.username, ctx.request.body.password])
-</code></pre>
-<h2 id="os命令注入">OS命令注⼊</h2>
-<pre><code>OS命令注⼊和SQL注⼊差不多，只不过SQL注⼊是针对数据库的，⽽OS命令注⼊是针对操作系统的。OS命令
-注⼊攻击指通过Web应⽤，执⾏⾮法的操作系统命令达到攻击的⽬的。只要在能调⽤Shell函数的地⽅就有
-存在被攻击的⻛险。倘若调⽤Shell时存在疏漏，就可以执⾏插⼊的⾮法命令。
-</code></pre>
-<pre><code>// 以 Node.js 为例，假如在接⼝中需要从 github 下载⽤户指定的 repo
-const exec = require('mz/child_process').exec;
-let params = {/* ⽤户输⼊的参数 */};
-exec(`git clone ${params.repo} /some/path`);
-</code></pre>
-<pre><code>https://github.com/xx/xx.git &amp;&amp; rm -rf /* &amp;&amp;
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[vue组件通信]]></title>
-        <id>https://junfa.vercel.app/vue-zu-jian-tong-xin/</id>
-        <link href="https://junfa.vercel.app/vue-zu-jian-tong-xin/">
-        </link>
-        <updated>2020-09-05T15:48:45.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="vue中组件之间的通信">vue中组件之间的通信</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>vue组件通信 | Battle-on</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link rel="shortcut icon" href="https://junfa.vercel.app//favicon.ico?v=1599999772222">
+<link rel="stylesheet" href="https://junfa.vercel.app//styles/main.css">
+<script crossorigin="anonymous" integrity="sha384-0ZzCA/j8e6AMgFp0IW8Ml4wkrN+zywlMV3HXwQxVFEbrQtu1GBmH06udQMcP6W3M" src="https://lib.baomitu.com/element-ui/latest/index.js"></script>
+
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="vue中组件之间的通信
+
+组件可以有以下几种关系：
+
+A-B、B-C、B-D都是父子关系
+C-D是兄弟关系
+A-C、A-D是隔代关系
+不同使用场景，如何选择有效的通信方式 ？vue组件中通信的几种方式 ？
+1. props ★★
+2. $e..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://junfa.vercel.app/">
+        <img src="https://junfa.vercel.app//images/avatar.png?v=1599999772222" class="site-logo">
+        <h1 class="site-title">Battle-on</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://junfa.vercel.app/study" class="site-nav" target="_blank">
+            技术文章
+          </a>
+        
+      
+        
+          <a href="https://junfa.vercel.app/moreabout" class="site-nav" target="_blank">
+            所思所想
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/Battle-on" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      <span>坚持原创，坚持独立思考<span>
+    </div>
+    <div class="site-footer">
+      <span><a href="https://github.com/Battle-on">我的主页</a></span> | <a class="rss" href="https://junfa.vercel.app//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">vue组件通信</h2>
+            <div class="post-date">2020-09-05</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="vue中组件之间的通信">vue中组件之间的通信</h2>
 <hr>
 <h4 id="组件可以有以下几种关系">组件可以有以下几种关系：</h4>
 <figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2019/12/31/16f5b7344e4d8dc5?w=353&amp;h=282&amp;f=png&amp;s=20520" alt="" loading="lazy"></figure>
@@ -707,250 +686,72 @@ inject: {
 <blockquote>
 <p>我们想在 component-a 中，访问到引用它的页面中（这里就是 parent.vue）的两个 component-b 组件，那这种情况下，就得配置额外的插件或工具了，比如 Vuex 和 Bus 的解决方案。</p>
 </blockquote>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[node.js 面试题]]></title>
-        <id>https://junfa.vercel.app/nodejs-mian-shi-ti/</id>
-        <link href="https://junfa.vercel.app/nodejs-mian-shi-ti/">
-        </link>
-        <updated>2020-08-25T12:16:32.000Z</updated>
-        <content type="html"><![CDATA[<p>业务中后台/架构方向方向，偏服务端基础中 Node.js 程序员，你需要有一定的 JavaScript/Node.js 基础, 并且有一定的工作经验。</p>
-<blockquote>
-<ol>
-<li>[enent]Js eventloop 与 node eventloop 对比？</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="2">
-<li>[内存释放]JavaScript 中不同类型以及不同环境下变量的内存都是何时释放?闭包中的数据/私有化的数据的内存什么时候释放？哪些操作一定会导致内存泄漏？[ v8 内存 GC 的机制, 懂得内存快照等?V8 中不同类型的数据存储的位置, 在内存释放的时候不同区域的不同策略?]</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="3">
-<li>[模块机制]如果 a.js require 了 b.js, 那么在 b 中定义全局变量 t = 111 能否在 a 中直接打印出来? a.js 和 b.js 两个文件互相 require 是否会死循环? 双方是否能导出变量? 如何从设计上避免这种问题?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="4">
-<li>[模块机制]AMD、CMD、CommonJs的区别？Node从内置模块require的原理?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="5">
-<li>[热更新]如何在不重启 node 进程的情况下热更新一个 js/json 文件? 热更新方案？</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="6">
-<li>[上下文]既然可以通过新的上下文来避免污染, 那么为什么 Node.js 不给每一个.js文件以独立的上下文来避免作用域被污染?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="7">
-<li>[阻塞/异步]有这样一个场景, 你在线上使用 koa 搭建了一个网站, 这个网站项目中有一个你同事写的接口 A, 而 A 接口中在特殊情况下会变成死循环. 那么首先问题是, 如果触发了这个死循环, 会对网站造成什么影响?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="8">
-<li>[进程]结合process，说下process.nextTick？父进程或子进程的死亡是否会影响对方? 什么是孤儿进程?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="9">
-<li>[进程间通信]在 IPC 通道建立之前, 父进程与子进程是怎么通信的? 如果没有通信, 那 IPC 是怎么建立的?什么情况下需要 IPC, 以及使用 IPC 处理过什么业务场景?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="10">
-<li>[守护进程]什么是守护进程, 为什么要用守护进程?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="11">
-<li>[Node]运用Buffer、Process、Stream,如何同步的获取用户的输入?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="12">
-<li>[负载均衡]说下负载均衡？如何检查服务器状态CheckList?</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="13">
-<li>[网络安全]说下服务的网络安全？</li>
-</ol>
-</blockquote>
-<h3 id="~~">~~</h3>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[vue3的学习！]]></title>
-        <id>https://junfa.vercel.app/vue/</id>
-        <link href="https://junfa.vercel.app/vue/">
-        </link>
-        <updated>2020-08-24T11:09:48.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
-<!-- more -->
-<blockquote>
-<p>vue3的使用，学习</p>
-</blockquote>
-<!-- more -->
-<h1 id="vue-2-和-vue-3的不同点">vue 2 和 vue 3的不同点：</h1>
-<ul>
-<li>composition Api</li>
-<li>虚拟dom的重写</li>
-<li>ts的更好支持</li>
-<li>vue的tree-shaeing</li>
-<li>reactive</li>
-<li>file size</li>
-<li>new Component</li>
-</ul>
-<p>初次体验vue3：</p>
-<blockquote>
-<p>vue-cli3 +</p>
-</blockquote>
-<pre><code>vue create vue3
-cd vue3
-vue add vue-next
-npm install 
-npm run serve
-</code></pre>
-<blockquote>
-<p>vite</p>
-</blockquote>
-<pre><code>npm install -g create-vite-app
-create-vite-app 01-vue3-vite
-cd 01-vue3-vite
-npm install
-npm run dev
-</code></pre>
-<p>还是推荐使用vite的方式 vue-cli3 在vue正式版本前，还需要使用 <code>@vue/composition-api</code> 来结合起来使用。</p>
-<p>vue3代码的体验</p>
-<pre><code>
-&lt;template&gt;
-  &lt;h1&gt;{{state.count}} * 2={{double}}&lt;/h1&gt;
-  &lt;h2&gt;{{num}}&lt;/h2&gt;
-  &lt;button @click=&quot;add&quot;&gt;累加&lt;/button&gt;
-&lt;/template&gt;
-&lt;script&gt;
-import {reactive,computed,ref,onMounted} from 'vue'
-export default {
-  setup(){
-    const state = reactive({
-      count:1
-    })
-    const num = ref(2)
 
-    function add(){
-      state.count++
-      num.value+=10
-    }
-    const double = computed(()=&gt;state.count*2)
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://junfa.vercel.app/nodejs-mian-shi-ti/">
+                  <h3 class="post-title">
+                    node.js 面试题
+                  </h3>
+                </a>
+              </div>
+            
 
-    onMounted(()=&gt;{
-      console.log('mouted')
-    })
-    return {state,add,double,num}
-  }
-}
-&lt;/script&gt;
-</code></pre>
-<p>composition Api</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[基金介绍：]]></title>
-        <id>https://junfa.vercel.app/基金/</id>
-        <link href="https://junfa.vercel.app/基金/">
-        </link>
-        <updated>2020-08-05T14:16:45.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
-<p><strong>基金的介绍😊</strong></p>
-<p>按照投资对象可以分为：货币型，股票型，混合型，债券型基金。<br>
-组织形态可分为： 公司型基金，契约型基金<br>
-根据封闭形态可以分为：开放式基金和封闭式基金。</p>
-<p>咱一个个来说：<br>
-🍎<code>:货币型基金</code></p>
-<p>🍏<code>:股票型基金</code></p>
-<p>🍐<code>:混合型</code></p>
-<p>🍊:<code>债券型基金</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[重新认识递归]]></title>
-        <id>https://junfa.vercel.app/suanfa/</id>
-        <link href="https://junfa.vercel.app/suanfa/">
-        </link>
-        <updated>2020-08-05T14:12:05.000Z</updated>
-        <summary type="html"><![CDATA[<blockquote>
-<p>重新学习了一波递归算法，有很多收获：</p>
-</blockquote>
-]]></summary>
-        <content type="html"><![CDATA[<blockquote>
-<p>重新学习了一波递归算法，有很多收获：</p>
-</blockquote>
-<!-- more -->
-<!-- more -->
-<p>下面我们来说说几个letcode的经典递归算法吧</p>
-<h3 id="反转字符串-使用递归的方案">反转字符串-使用递归的方案</h3>
-<pre><code>var reverseString = function(s,index = 0) {
-    if(index &gt;= Math.floor(s.length / 2)){
-    }else {
-        const temp = s[index];
-        s[index] = s[s.length -  index - 1]
-        s[s.length -  index - 1] = temp;
-        reverseString(s,index + 1)
-    }
-};
-</code></pre>
-<h4 id="杨辉三角">杨辉三角</h4>
-<pre><code>var generate = function(numRows) {
-    if(numRows===1){
-        return [[1]]
-    }
-    const arr = []
+            
+              
 
-    for(let i=0;i&lt;numRows;i++){
-        arr[i] = []
-            for(let j=0;j&lt;=i;j++){
-                arr[i][j] = []
-                if(j==0 || j==i) {
-                    arr[i][j]=1;    //边界赋值为1   
-                }else{
-                    arr[i][j]=arr[i-1][j-1]+arr[i-1][j];
-                }
-            }
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: '',
+      apikey: '',
     }
-    return arr
-};
-</code></pre>
-<h3 id="递归的高阶应用-memorization">递归的高阶应用-memorization</h3>
-<h5 id="经典案例爬楼梯">经典案例：爬楼梯</h5>
-<h6 id="假设你正在爬楼梯-需要-n-阶你才能到达楼顶-每次你可以爬-1-或-2个台阶-你有多少种不同的方法可以爬到楼顶呢注意给定-n-是一个正整数">假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2个台阶。你有多少种不同的方法可以爬到楼顶呢？注意：给定 n 是一个正整数</h6>
-<p>我们，分析一下，我们找下规律，因为题目限定了 值可以爬 1 或者2个台阶，也就是说，到底最高层台阶的前一步只有两种选择，要不就是 在 第 <code>n - 1</code><br>
-要不就是 在 第 <code>n - 2</code>层</p>
-<pre><code>一层楼梯： 1
-两层楼梯： 1 + 1， 2
-三层楼梯： 1 + 2，1+1+1 ， 2+1
-四层楼梯： 1+1+2 2+2 1+2+1 1+1+1+1 2+1+1
-</code></pre>
-<p>根据需求，代码如下：</p>
-<pre><code>const map = new Map()
-const climbStairs = function(n) {
-  let reslut = ''
-  if(map.get(n)){
-    return map.get(n)
-  }
-  if(n &lt;= 3) {
-      reslut =  n
-  }else {
-    reslut =  climbStairs(n - 1) +  climbStairs(n-2)
-  }
-  map.set(n, reslut)
-  return reslut
-};
-</code></pre>
-]]></content>
-    </entry>
-</feed>
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
+
+
+
+
+  </body>
+</html>
